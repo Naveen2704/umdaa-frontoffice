@@ -1,0 +1,7 @@
+{
+  "name": "UMDAA Health Care",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
