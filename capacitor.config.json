@@ -1,6 +1,6 @@
 {
-	"appId": "io.ionic.starter",
-	"appName": "UMDAA Health Care",
-	"webDir": "www",
-	"bundledWebRuntime": false
+  "appId": "io.ionic.umdaa",
+  "appName": "UMDAA Health Care",
+  "webDir": "www",
+  "bundledWebRuntime": false
 }

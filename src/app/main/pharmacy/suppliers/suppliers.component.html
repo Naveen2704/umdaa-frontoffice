@@ -1,0 +1,80 @@
+<ion-content>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>
+        <i class="fas fa-ambulance"></i> Suppliers
+      </ion-title>
+      <ion-buttons slot="end">
+        <button mat-raised-button color="primary" class="float-end me-2" routerLink="/addSupplier">Add Supplier</button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="container-fluid my-3">
+    <div class="row">
+      <div class="col-12">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Search Suppliers</mat-label>
+          <input matInput (keyup)="applyFilter($event)" #input>
+        </mat-form-field>            
+      </div>     
+    </div>
+    <div class="row">
+      <div class="col-md-12">         
+         <table class="w-100 border my-2" mat-table [dataSource]="suppliersSource" matSort matSortActive="id" matSortDisableClear matSortDirection="asc">
+
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>#</th>
+            <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+          </ng-container>  
+
+          <ng-container matColumnDef="storeName">
+            <th mat-header-cell *matHeaderCellDef>Store Name</th>
+            <td mat-cell *matCellDef="let row">
+              <p class="font-weight-bold mb-1">{{ row.store_name }}</p>
+            </td>
+          </ng-container>  
+
+          <ng-container matColumnDef="contactPerson">
+            <th mat-header-cell *matHeaderCellDef>Contact Person</th>
+            <td mat-cell *matCellDef="let row">{{ row.person_name }}</td>
+          </ng-container>     
+
+          <ng-container matColumnDef="mobile">
+            <th mat-header-cell *matHeaderCellDef>Mobile</th>
+            <td mat-cell *matCellDef="let row">{{ row.mobile }}</td>
+          </ng-container>            
+
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>Email</th>
+            <td mat-cell *matCellDef="let row">{{ row.email }}</td>
+          </ng-container>  
+
+          <ng-container matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef>Address</th>
+            <td mat-cell *matCellDef="let row">{{ row.address }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="location">
+            <th mat-header-cell *matHeaderCellDef>Location</th>
+            <td mat-cell *matCellDef="let row">{{ row.location }}</td>
+          </ng-container>           
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-mini-fab class="me-2" color="primary"><i class="fas fa-edit"></i></button>
+              <button mat-mini-fab color="warn"><i class="fas fa-trash"></i></button>
+            </td>
+          </ng-container>     
+
+          <tr mat-header-row *matHeaderRowDef="suppliersCols"></tr>
+          <tr mat-row *matRowDef="let row; columns: suppliersCols;"></tr>
+
+         </table>
+      </div>
+    </div>
+    <mat-paginator [length]="suppliersSource.filteredData.length" [pageSizeOptions]="[10, 25, 50, 100]" [pageSize]="5"></mat-paginator>
+  </div>
+
+</ion-content>

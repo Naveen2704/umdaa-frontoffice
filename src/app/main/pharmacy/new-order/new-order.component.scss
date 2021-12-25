@@ -1,0 +1,11 @@
+.searchSuggestions{
+    z-index: 9999 !important;
+    border: 1px solid #dbdbdb;
+    width: 97%;
+    left: 20px;
+}
+.suggestionItem{
+    --inner-border-width: 0px !important;
+    --min-height: 15px !important;
+
+}

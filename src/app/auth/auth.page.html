@@ -1,0 +1,62 @@
+<ion-content class="login-page">
+  <div class=""></div>
+  <div class="container text-center">
+    <ion-slides pager="false" #slides>
+
+      <ion-slide>
+        <div class="row login_div justify-content-center m-0">
+          <div class="col-md-5 p-0 col-12">
+            <ion-card class="border-0 shadow">
+              <ion-card-content class="py-5">
+                <p class="text-center">
+                  <img src="assets/logo.png" class="img-responsive" alt="">
+                </p>
+                <h4 class="text-center my-4">Sign in to start your session</h4>
+                <form [formGroup]="loginForm" (ngSubmit)="login()">
+                  <mat-form-field appearance="outline" class="w-100 mb-2">
+                    <mat-label>Username</mat-label>
+                    <input type="text" autocomplete="new-password" matInput formControlName="username">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="w-100 mb-2">
+                    <mat-label>Password</mat-label>
+                    <input type="password" autocomplete="new-password" matInput formControlName="password">
+                  </mat-form-field>
+                  <button mat-raised-button color="primary" class="btn-block w-100">Submit</button>                  
+                </form>
+                <p class="float-end mt-2">
+                  <a (click)="slides.slideNext()" >Forgot Password ?</a>
+                </p>
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </div>
+      </ion-slide>
+      <ion-slide>
+        <div class="row login_div justify-content-center m-0">
+          <div class="col-md-5 p-0 col-12">
+            <ion-card class="border-0 shadow">
+              <ion-card-content class="py-5">
+                <p class="text-center">
+                  <img src="assets/logo.png" class="img-responsive" alt="">
+                </p>
+                <h4 class="text-center my-4">Forgot Password</h4>
+                <form [formGroup]="loginForm" (ngSubmit)="login()">
+                  <mat-form-field appearance="outline" class="w-100 mb-2">
+                    <mat-label>Mobile Number / Email</mat-label>
+                    <input type="text" autocomplete="new-password" matInput formControlName="username">
+                  </mat-form-field>
+                  <button mat-raised-button color="primary" class="btn-block w-100">Submit</button>                  
+                </form>
+                <p class="float-end mt-2">
+                  <a (click)="slides.slidePrev()" >Back To Login</a>
+                </p>
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </div>
+      </ion-slide>
+
+    </ion-slides>
+    
+  </div>
+</ion-content>

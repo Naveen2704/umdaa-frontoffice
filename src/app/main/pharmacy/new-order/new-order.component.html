@@ -1,0 +1,163 @@
+<ion-content>
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <button mat-icon-button color="primary" routerLink="/orders"><i class="fas fa-chevron-left"></i></button>
+      </ion-buttons>
+      <ion-title>
+        <i class="fas fa-shopping-cart"></i> Orders
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <div class="container-fluid my-3">
+    <div class="row">
+      <div class="col-12">
+        <form [formGroup]="DrugSearchForm">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Drug Search</mat-label>
+            <input type="text" id="drug" #drugsInp (ngModelChange)="drugSearch(drugsInp.value)" placeholder="Search using Drug Name" matInput formControlName='search' [matAutocomplete]="auto2">
+            <mat-hint class="mt-3">Minimum 3 letters has to be entered for search</mat-hint>
+            <mat-autocomplete #auto2="matAutocomplete" [panelWidth]="fit">
+              <mat-option class="p-1 border-bottom" *ngFor="let item of drugsList " [value]="item.drug_name" (click)="addDrug(item)" >
+                <span class="ms-3">{{ item.drug_name }}</span> <span class="badge bg-dark">#{{ item.batch_no }}</span>
+                <span class="float-end font-weight-bold me-3">Available : {{ item.available_qty }}</span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </form>
+      </div>
+    </div>
+
+    <div class="row mt-3 mb-1">
+      <div class="col-md-12">
+        <h4 class="bg-secondary text-white m-0 p-2">Customer Info</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3 col-12 col-lg-3">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Mobile Number</mat-label>
+          <input type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-md-3 col-12 col-lg-3">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Customer Name</mat-label>
+          <input type="text" matInput>
+        </mat-form-field>
+      </div>
+      <div class="col-md-3 col-4 col-lg-3">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Gender</mat-label>
+          <mat-select>
+            <mat-option disabled>Select Gender</mat-option>
+            <mat-option value="Male">Male</mat-option>
+            <mat-option value="Female">Female</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-1 col-4 col-lg-1">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Age</mat-label>
+          <input type="text" matInput>          
+        </mat-form-field>
+      </div>
+      <div class="col-md-2 col-4 col-lg-2">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>&nbsp;</mat-label>
+          <mat-select value="years">
+            <mat-option selected value="years">Years</mat-option>
+            <mat-option value="months">Months</mat-option>
+            <mat-option value="days">Days</mat-option>
+          </mat-select>          
+        </mat-form-field>
+      </div>
+    </div>
+    
+    <div class="row mt-1 mb-1">
+      <div class="col-md-12">
+        <h4 class="bg-secondary text-white m-0 p-2">Products Info</h4>
+      </div>
+    </div>
+
+    <div class="row my-2">
+      <div class="col-12">
+
+        <table mat-table [dataSource]="DrugsData" class="w-100 border">
+          
+          <ng-container matColumnDef="id">
+            <th mat-header-cell class="text-center" *matHeaderCellDef>#</th>
+            <td mat-cell class="text-center" *matCellDef="let row">{{ row.id }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="drugInfo">
+            <th mat-header-cell class="text-center" *matHeaderCellDef>Drug Info</th>
+            <td mat-cell class="text-center" *matCellDef="let row">{{ row.drugInfo }}</td>
+          </ng-container>
+    
+          <ng-container matColumnDef="batchInfo">
+            <th mat-header-cell class="text-center" *matHeaderCellDef>Batch</th>
+            <td mat-cell class="text-center" *matCellDef="let row">{{ row.batchInfo }}</td>
+          </ng-container>
+    
+          <ng-container matColumnDef="quantity">
+            <th mat-header-cell class="text-center" *matHeaderCellDef>Quantity</th>
+            <td mat-cell class="text-center" *matCellDef="let row;let i = index;">
+              <mat-form-field appearance="outline" class="w-50">
+                <mat-label>Quantity</mat-label>
+                <input type="text" #qty (input)="calculate(qty.value, i)" matInput >
+              </mat-form-field>
+            </td>
+          </ng-container>
+    
+          <ng-container matColumnDef="cost">
+            <th mat-header-cell class="text-center" *matHeaderCellDef>Unit Cost</th>
+            <td mat-cell class="text-center" *matCellDef="let row">{{ row.cost }}</td>
+          </ng-container>
+    
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell class="text-center" *matHeaderCellDef>Amount</th>
+            <td mat-cell class="text-center" *matCellDef="let row;let i = index">{{ row.amount.toFixed(2) }}</td>
+          </ng-container>
+          
+          <ng-container matColumnDef="disc">
+            <th mat-header-cell class="text-center" *matHeaderCellDef>
+              <mat-checkbox (change)="discount($event)">Discount</mat-checkbox>
+            </th>
+            <td mat-cell class="text-center" *matCellDef="let row">
+              <p *ngIf="openDisc == false">{{ row.disc }}</p>
+              <mat-form-field appearance="outline" class="w-25" *ngIf="openDisc == true">
+                <mat-label>Discount</mat-label>
+                <input matInput name="" [(ngModel)]="row.max_disc">
+              </mat-form-field>
+            </td>
+          </ng-container>
+    
+          <ng-container matColumnDef="toPay">
+            <th mat-header-cell class="text-center" *matHeaderCellDef>To Pay</th>
+            <td mat-cell class="text-center" *matCellDef="let row">{{ row.toPay.toFixed(2) }}</td>
+          </ng-container>
+    
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell class="text-center" *matHeaderCellDef>Actions</th>
+            <td mat-cell class="text-center" *matCellDef="let row;let i = index">
+              <button mat-button color="warn" (click)="removeDrug(i)"><mat-icon>delete</mat-icon></button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+        </table>    
+
+      </div>
+      <div class="col-12 my-2">
+        <h2 class="bg-light m-0 p-2">
+          <button mat-raised-button color="primary">Submit</button>
+          <span class="float-end">Total: {{ totalPrice }}</span>
+        </h2>
+      </div>
+    </div>
+
+  </div>
+</ion-content>

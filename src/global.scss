@@ -24,3 +24,62 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Lato:wght@300;400;900&display=swap');
+html,body,tr,td,li,a,span,p,label,h1,h2,h3,h4,h5,h6,div,section,input,textarea,select,button,mat-label,ion-label,ion-card,ion-card-content,ion-card-header,ion-segment-button,ion-segment,ion-button,ion-title {
+    font-family: "Jost", sans-serif !important;
+}
+
+h2.swal2-title {
+    margin-bottom: 5px !important;
+}
+
+div.swal2-html-container {
+    margin: 0px;
+}
+
+.page-title {
+    font-size: 20px !important;
+    color: #5d5d5d;
+    padding-bottom: 15px !important;
+}
+
+.ion-bg-light {
+    --background: #dfdfdf;
+}
+
+th {
+    font-weight: 500;
+    font-size: 16px;
+}
+
+th,td {
+    padding: 8px !important;
+}
+
+.mat-form-field-wrapper{
+    padding-bottom: 0px !important;
+}
+
+.mat-header-cell {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+.mat-ink-bar {
+    min-width: 140px !important;
+}
+
+.mat-paginator-page-size-select {
+    line-height: 3.125 !important;
+}
+
+.badge {
+    font-weight: 400 !important;
+}
+
+th {
+    text-align: center !important;
+}

@@ -1,0 +1,43 @@
+
+<ion-app>
+  
+  <ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start" class="mobile-menu float-left">
+            <ion-menu-button class="p-1"></ion-menu-button>
+        </ion-buttons>
+        <ion-title class="py-2 text-center text-xl-start text-lg-start text-md-start">
+          <img src="assets/umdaa_clinic_logo.png" alt="">
+        </ion-title>
+        <ion-fab-button size="small" slot="end" class="me-4 logout-button" color="accent">
+          <ion-icon name="power-outline"></ion-icon>
+        </ion-fab-button>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+      <ion-split-pane contentId="content" class="app-sidemenu" when="(min-width:992px)">
+  
+          <ion-menu>
+              <ion-content>
+                <ion-list-header class="bg-light">
+                  <ion-label><i class="fas fa-cog"></i> Main Navigation</ion-label>
+                </ion-list-header>
+                  <ion-list class="menu-gradient pt-0" lines="none">
+                    <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+                      <ion-item (click)="changeUrl(p.url)" routerDirection="root" [routerLink]="[p.url]" class="menu-item" [class.selectedIndex]="p.url === selectedUrl"  lines="none" detail="false">
+                        <!-- <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'" class="me-3"></ion-icon> -->
+                        <i class="fas {{ p.icon }} me-2 menu-icon"></i>
+                        <ion-label>{{ p.title }}</ion-label>
+                      </ion-item>
+                    </ion-menu-toggle>
+                  </ion-list>
+              </ion-content>
+  
+          </ion-menu>
+          
+  
+          <ion-router-outlet id="content" main class="router-outlet"></ion-router-outlet>
+          
+      </ion-split-pane>
+  </ion-content>
+</ion-app>

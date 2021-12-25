@@ -1,0 +1,296 @@
+<ion-content>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>
+        <i class="fas fa-dolly-flatbed"></i> Inventory
+      </ion-title>
+      <button slot="end" mat-raised-button color="primary" class="me-3" routerLink="/newDrug">Add New Drug</button>
+    </ion-toolbar>
+  </ion-header>
+  <div class="container-fluid p-0">
+    
+    <div class="row mb-2">
+      <div class="col-md-12">
+        <mat-tab-group color="primary" (selectedTabChange)="tabClick($event)">
+          <mat-tab label="Inventory" isActive="true" (click)="inventory()">
+            <div class="container-fluid my-3">
+              <div class="row">
+                <div class="col-12 col-md-6 col-lg-6">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Search Drugs</mat-label>
+                    <input matInput (keyup)="applyInventoryFilter($event)" placeholder="Ex. Dolo 650, Calpol" #input>
+                  </mat-form-field>            
+                </div>     
+                <div class="col-12 col-md-6 col-lg-6 mt-2">
+                  <button mat-raised-button color="primary" class="float-end">Print Inventory List</button>
+                  <button mat-stroked-button color="primary" class="float-end me-2">Total Inventory Value : {{ inventoryValue }}</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">         
+                   <table class="w-100 border table-bordered my-2" mat-table [dataSource]="invSource" matSort matSortActive="id" matSortDirection="asc">
+
+                    <ng-container matColumnDef="id">
+                      <th class="text-center" mat-header-cell *matHeaderCellDef>#</th>
+                      <td class="text-center" mat-cell *matCellDef="let row;let i = index">{{ i+1 }}</td>
+                    </ng-container>  
+
+                    <ng-container matColumnDef="drugInfo">
+                      <th mat-header-cell *matHeaderCellDef>Drug Info</th>
+                      <td mat-cell *matCellDef="let row">
+                        <p class="font-weight-bold mb-0">{{ row.trade_name }}<span class="badge bg-dark float-end">{{ row.formulation }}</span></p>
+                        <!-- <small>HSN : {{ row.hsn_code }}</small> -->
+                      </td>
+                    </ng-container> 
+
+                    <ng-container matColumnDef="batchInfo">
+                      <th mat-header-cell *matHeaderCellDef>Batch Info</th>
+                      <td mat-cell *matCellDef="let row">
+                        <p class="font-weight-bold mb-1">#{{ row.batch_no }}</p>
+                      </td>
+                    </ng-container>  
+
+                    <ng-container matColumnDef="expiryDate">
+                      <th mat-header-cell *matHeaderCellDef>Expiry Date</th>
+                      <td mat-cell *matCellDef="let row">{{ row.expiry_date }}</td>
+                    </ng-container>     
+
+                    <ng-container matColumnDef="quantity">
+                      <th mat-header-cell *matHeaderCellDef>Ava. QTY</th>
+                      <td class="text-center" mat-cell *matCellDef="let row">{{ row.quantity }}</td>
+                    </ng-container>            
+
+                    <ng-container matColumnDef="mrp">
+                      <th mat-header-cell *matHeaderCellDef>MRP - Pack Size</th>
+                      <td class="text-center" mat-cell *matCellDef="let row">{{ row.mrp }} - {{ row.pack_size }}</td>
+                    </ng-container>         
+
+                    <ng-container matColumnDef="purchaseCost">
+                      <th mat-header-cell *matHeaderCellDef>Purchase Price</th>
+                      <td class="text-center" mat-cell *matCellDef="let row">{{ row.purchaseCost }}</td>
+                    </ng-container>   
+
+                    <ng-container matColumnDef="drugCost">
+                      <th mat-header-cell *matHeaderCellDef>Unit Cost</th>
+                      <td class="text-center" mat-cell *matCellDef="let row">{{ row.cost }}</td>
+                    </ng-container>         
+
+                    <ng-container matColumnDef="max_disc">
+                      <th mat-header-cell *matHeaderCellDef>Max DISC.</th>
+                      <td class="text-center" mat-cell *matCellDef="let row">{{ row.discount }}</td>
+                    </ng-container>     
+
+                    <ng-container matColumnDef="rl">
+                      <th mat-header-cell *matHeaderCellDef>RL</th>
+                      <td class="text-center" mat-cell *matCellDef="let row">{{ row.reorder_level }}</td>
+                    </ng-container>     
+
+                    <ng-container matColumnDef="actions">
+                      <th mat-header-cell *matHeaderCellDef>Actions</th>
+                      <td class="text-center" mat-cell *matCellDef="let row">
+                        <button mat-mini-fab color="primary" class="me-2"><i class="fas fa-pencil-alt"></i></button>
+                        <button mat-mini-fab color="warn"><i class="fas fa-trash"></i></button>
+                      </td>
+                    </ng-container>     
+
+                    <tr mat-header-row *matHeaderRowDef="inventoryCols"></tr>
+                    <tr mat-row *matRowDef="let row; columns: inventoryCols;"></tr>
+
+                   </table>
+                </div>
+              </div>
+              <mat-paginator [length]="invSource.filteredData.length" [pageSize]="30"></mat-paginator>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Shortage" (click)="shortage()">
+            <div class="container-fluid my-3">
+              <div class="row">
+                <div class="col-12 col-md-6 col-lg-6">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Search Drugs</mat-label>
+                    <input matInput (keyup)="applyShortageFilter($event)" placeholder="Ex. Dolo 650, Calpol" #input>
+                  </mat-form-field>            
+                </div>     
+                <div class="col-12 col-md-6 col-lg-6 mt-2">
+                  <button mat-raised-button color="primary" class="float-end me-2">Print Shortage List</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">         
+                   <table class="w-100 border my-2" mat-table [dataSource]="shortSource" matSort matSortActive="id" matSortDisableClear matSortDirection="desc">
+
+                    <ng-container matColumnDef="id">
+                      <th mat-header-cell *matHeaderCellDef>#</th>
+                      <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+                    </ng-container>  
+
+                    <ng-container matColumnDef="drugInfo">
+                      <th mat-header-cell *matHeaderCellDef>Drug Info</th>
+                      <td mat-cell *matCellDef="let row">
+                        <p class="font-weight-bold mb-1">{{ row.trade_name }}</p>
+                      </td>
+                    </ng-container>  
+
+                    <ng-container matColumnDef="batchInfo">
+                      <th mat-header-cell *matHeaderCellDef>Bacth Info</th>
+                      <td mat-cell *matCellDef="let row">{{ row.batch_no }}</td>
+                    </ng-container>   
+
+                    <ng-container matColumnDef="expiryDate">
+                      <th mat-header-cell *matHeaderCellDef>Expiry Date</th>
+                      <td mat-cell *matCellDef="let row">{{ row.expiry_date }}</td>
+                    </ng-container>     
+
+                    <ng-container matColumnDef="quantity">
+                      <th mat-header-cell *matHeaderCellDef>Ava. QTY</th>
+                      <td mat-cell *matCellDef="let row">{{ row.quantity }}</td>
+                    </ng-container>           
+
+                    <ng-container matColumnDef="actions">
+                      <th mat-header-cell *matHeaderCellDef>Actions</th>
+                      <td mat-cell *matCellDef="let row">
+                        <button mat-mini-fab><i class="fas fa-edit"></i></button>
+                        <button mat-mini-fab><i class="fas fa-trash"></i></button>
+                      </td>
+                    </ng-container>     
+
+                    <tr mat-header-row *matHeaderRowDef="drugsCols"></tr>
+                    <tr mat-row *matRowDef="let row; columns: drugsCols;"></tr>
+
+                   </table>
+                </div>
+              </div>
+              <mat-paginator [length]="shortSource.filteredData.length" [pageSize]="30"></mat-paginator>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Expiring Soon" (click)="expiringSoon()">
+            <div class="container-fluid my-3">
+              <div class="row">
+                <div class="col-12 col-md-6 col-lg-6">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Search Drugs</mat-label>
+                    <input matInput (keyup)="applyExpSoonFilter($event)" placeholder="Ex. Dolo 650, Calpol" #input>
+                  </mat-form-field>            
+                </div>     
+                <div class="col-12 col-md-6 col-lg-6 mt-2">
+                  <button mat-raised-button color="primary" class="float-end me-2">Print Expiring Soon List</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">         
+                   <table class="w-100 border my-2" mat-table [dataSource]="expSoonSource" matSort matSortActive="id" matSortDisableClear matSortDirection="desc">
+
+                    <ng-container matColumnDef="id">
+                      <th mat-header-cell *matHeaderCellDef>#</th>
+                      <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+                    </ng-container>  
+
+                    <ng-container matColumnDef="drugInfo">
+                      <th mat-header-cell *matHeaderCellDef>Drug Info</th>
+                      <td mat-cell *matCellDef="let row">
+                        <p class="font-weight-bold mb-1">{{ row.trade_name }}</p>
+                      </td>
+                    </ng-container>  
+
+                    <ng-container matColumnDef="batchInfo">
+                      <th mat-header-cell *matHeaderCellDef>Bacth Info</th>
+                      <td mat-cell *matCellDef="let row">{{ row.batch_no }}</td>
+                    </ng-container>   
+
+                    <ng-container matColumnDef="expiryDate">
+                      <th mat-header-cell *matHeaderCellDef>Expiry Date</th>
+                      <td mat-cell *matCellDef="let row">{{ row.expiry_date }}</td>
+                    </ng-container>     
+
+                    <ng-container matColumnDef="quantity">
+                      <th mat-header-cell *matHeaderCellDef>Ava. QTY</th>
+                      <td mat-cell *matCellDef="let row">{{ row.quantity }}</td>
+                    </ng-container>           
+
+                    <ng-container matColumnDef="actions">
+                      <th mat-header-cell *matHeaderCellDef>Actions</th>
+                      <td mat-cell *matCellDef="let row">
+                        <button mat-mini-fab><i class="fas fa-edit"></i></button>
+                        <button mat-mini-fab><i class="fas fa-trash"></i></button>
+                      </td>
+                    </ng-container>     
+
+                    <tr mat-header-row *matHeaderRowDef="drugsCols"></tr>
+                    <tr mat-row *matRowDef="let row; columns: drugsCols;"></tr>
+
+                   </table>
+                </div>
+              </div>
+              <mat-paginator [length]="expSoonSource.filteredData.length" [pageSize]="30"></mat-paginator>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Expired" (click)="expired()">
+            <div class="container-fluid my-3">
+              <div class="row">
+                <div class="col-12 col-md-6 col-lg-6">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Search Drugs</mat-label>
+                    <input matInput (keyup)="applyExpFilter($event)" placeholder="Ex. Dolo 650, Calpol" #input>
+                  </mat-form-field>            
+                </div>     
+                <div class="col-12 col-md-6 col-lg-6 mt-2">
+                  <button mat-raised-button color="primary" class="float-end me-2">Print Expired List</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">         
+                   <table class="w-100 border my-2" mat-table [dataSource]="expSource" matSort matSortActive="id" matSortDisableClear matSortDirection="desc">
+
+                    <ng-container matColumnDef="id">
+                      <th mat-header-cell *matHeaderCellDef>#</th>
+                      <td mat-cell *matCellDef="let row; let i = index">{{ i+1 }}</td>
+                    </ng-container>  
+
+                    <ng-container matColumnDef="drugInfo">
+                      <th mat-header-cell *matHeaderCellDef>Drug Info</th>
+                      <td mat-cell *matCellDef="let row">
+                        <p class="font-weight-bold mb-1">{{ row.trade_name }}</p>
+                      </td>
+                    </ng-container>  
+
+                    <ng-container matColumnDef="batchInfo">
+                      <th mat-header-cell *matHeaderCellDef>Bacth Info</th>
+                      <td mat-cell *matCellDef="let row">{{ row.batch_no }}</td>
+                    </ng-container>   
+
+                    <ng-container matColumnDef="expiryDate">
+                      <th mat-header-cell *matHeaderCellDef>Expiry Date</th>
+                      <td mat-cell *matCellDef="let row">{{ row.expiry_date }}</td>
+                    </ng-container>     
+
+                    <ng-container matColumnDef="quantity">
+                      <th mat-header-cell *matHeaderCellDef>Ava. QTY</th>
+                      <td mat-cell *matCellDef="let row">{{ row.quantity }}</td>
+                    </ng-container>           
+
+                    <ng-container matColumnDef="actions">
+                      <th mat-header-cell *matHeaderCellDef>Actions</th>
+                      <td mat-cell *matCellDef="let row">
+                        <button mat-mini-fab color="primary" class="me-2"><i class="fas fa-edit"></i></button>
+                        <button mat-mini-fab color="warn"><i class="fas fa-trash"></i></button>
+                      </td>
+                    </ng-container>     
+
+                    <tr mat-header-row *matHeaderRowDef="drugsCols"></tr>
+                    <tr mat-row *matRowDef="let row; columns: drugsCols;"></tr>
+
+                   </table>
+                </div>
+              </div>
+              <mat-paginator [length]="expSource.filteredData.length" [pageSize]="30" ></mat-paginator>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+    
+  </div>
+</ion-content>
