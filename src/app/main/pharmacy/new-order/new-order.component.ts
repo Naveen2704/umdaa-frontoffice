@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormField } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatTable } from '@angular/material/table';
 import { ChainService } from 'src/app/services/chain.service';
@@ -30,12 +31,15 @@ export class NewOrderComponent implements OnInit {
 
   @ViewChild(MatTable) table: MatTable<Drugs>;
   @ViewChild(MatInput) drugsInp: MatInput;
+  @ViewChild(MatFormField) transaction_id: MatFormField;
 
   DrugSearchForm: FormGroup;
   drugsList: any = [];
   userData: any;
   totalPrice: any = "0.00";
   openDisc: boolean = false;
+  newBillForm: FormGroup;
+  transactionShow: boolean = false;
 
   constructor(private form: FormBuilder, private service: ChainService) {
   }
@@ -43,6 +47,25 @@ export class NewOrderComponent implements OnInit {
   ngOnInit() {   
     this.DrugSearchForm = this.form.group({
       search: ['', Validators.required]
+    });
+    this.newBillForm = this.form.group({
+      customer_name: ['', Validators.required],
+      mobile: ['', Validators.required],
+      gender: [''],
+      age: [''],
+      age_unit: [''],
+      payment_mode: ['', Validators.required],
+      transactionID: [''],
+      drugs: this.form.array([this.newDrugFields()])
+    });
+  }
+
+  newDrugFields(): FormGroup {
+    return this.form.group({
+      drug_id: ['', Validators. required],
+      batch_no: ['', Validators.required],
+      qty: ['', Validators.required],
+      discount: ['', Validators.required]
     })
   }
 
@@ -52,6 +75,15 @@ export class NewOrderComponent implements OnInit {
     }
     else {
       this.openDisc = false
+    }
+  }
+
+  paymentMode(val) {
+    if(val == 'card' || val == "upi") {
+      this.transactionShow = true
+    }
+    else {
+      this.transactionShow = false
     }
   }
 

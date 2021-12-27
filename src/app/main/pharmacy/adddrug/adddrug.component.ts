@@ -42,6 +42,7 @@ export class AdddrugComponent implements OnInit {
       batch_no: ['', Validators.required],
       qty: [0, Validators.required],
       mrp: [0, Validators.required],
+      pp: [0, Validators.required],
       pack_size: [0, Validators.required],
       rl: [0, Validators.required],
       igst: [0, Validators.required],

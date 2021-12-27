@@ -35,12 +35,7 @@ export class ChainService {
     else {
       url = base_url + "/" + method + "/" + clinic_id + "/" + id;
     }     
-    // const loader = await this.loading.create({
-    //   message: 'Getting Data'
-    // })
-    // await loader.present()
     var data = this.http.get(url);
-    // this.loading.dismiss();
     return data;
   }
 
