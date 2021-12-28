@@ -1,13 +1,15 @@
 export interface OrdersList {
     id: number;
-    customer_name: string;
+    guest_name: string;
     mobile: number;
     invoice_no: string;
-    invoice_date: string;
-    cost: number;
-    amount_paid: number;
-    discount: number;
+    order_date: string;
+    total_amount: number;
+    billing_amount: number;
     status: string;
     payment_mode: string;
+    gender: string;
+    age: string;
+    transaction_id: string;
 }
 

@@ -51,7 +51,7 @@ import { GstComponent } from './main/pharmacy/gst/gst.component';
     MaterialModule,
     BrowserAnimationsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

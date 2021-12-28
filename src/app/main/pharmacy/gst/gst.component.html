@@ -6,4 +6,46 @@
       </ion-title>
     </ion-toolbar>
   </ion-header>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4 col-12 my-3">
+        <ion-card class="bg-warning">
+          <ion-card-header>
+            <ion-card-title>GST Filed Till Now
+              <button mat-button class="text-white float-end"><mat-icon>info</mat-icon></button>
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <h1 class="mb-0">0.00</h1>
+          </ion-card-content>
+        </ion-card>
+      </div>
+      
+      <div class="col-md-4 col-12 my-3">
+        <ion-card class="bg-primary text-white">
+          <ion-card-header>
+            <ion-card-title class="text-white">GST To be Filed
+              <button mat-button class="text-white float-end"><mat-icon>info</mat-icon></button>
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <h1 class="mb-0 text-white">{{ toPaid }}</h1>
+          </ion-card-content>
+        </ion-card>
+      </div>
+
+      <div class="col-md-4 col-12 my-3">
+        <ion-card class="bg-success">
+          <ion-card-header>
+            <ion-card-title class="text-white">Profit Gained Till Now
+              <button mat-button class="text-white float-end"><mat-icon>info</mat-icon></button>
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <h1 class="mb-0 text-white">{{ profit }}</h1>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div> 
+  </div>
 </ion-content>

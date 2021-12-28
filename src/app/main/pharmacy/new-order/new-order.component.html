@@ -27,8 +27,8 @@
         </form>
       </div>
     </div>
-    <!-- [formGroup]="newBillForm" (ngSubmit)="createBill()" -->
-    <form>
+    <!-- (ngSubmit)="createBill()" -->
+    <form [formGroup]="newBillForm" (ngSubmit)="createBill()">
 
       <div class="row mt-3 mb-1">
         <div class="col-md-12">
@@ -39,19 +39,19 @@
         <div class="col-md-3 col-12 col-lg-3">
           <mat-form-field class="w-100" appearance="outline">
             <mat-label>Mobile Number *</mat-label>
-            <input type="text" matInput>
+            <input type="text" matInput formControlName="mobile">
           </mat-form-field>
         </div>
         <div class="col-md-3 col-12 col-lg-3">
           <mat-form-field class="w-100" appearance="outline">
             <mat-label>Customer Name *</mat-label>
-            <input type="text" matInput>
+            <input type="text" matInput formControlName="customer_name">
           </mat-form-field>
         </div>
         <div class="col-md-3 col-4 col-lg-3">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Gender</mat-label>
-            <mat-select>
+            <mat-select formControlName="gender">
               <mat-option disabled>Select Gender</mat-option>
               <mat-option value="Male">Male</mat-option>
               <mat-option value="Female">Female</mat-option>
@@ -61,14 +61,14 @@
         <div class="col-md-1 col-4 col-lg-1">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Age</mat-label>
-            <input type="text" matInput>          
+            <input type="text" matInput formControlName="age">          
           </mat-form-field>
         </div>
         <div class="col-md-2 col-4 col-lg-2">
           <mat-form-field appearance="outline" class="w-100">
-            <mat-label>&nbsp;</mat-label>
-            <mat-select value="years">
-              <mat-option selected value="years">Years</mat-option>
+            <mat-label>Age Unit</mat-label>
+            <mat-select [(ngModel)]="selectedAgeUnit" formControlName="age_unit">
+              <mat-option value="years">Years</mat-option>
               <mat-option value="months">Months</mat-option>
               <mat-option value="days">Days</mat-option>
             </mat-select>          
@@ -86,7 +86,7 @@
         <div class="col-12 col-md-3 col-lg-3">
           <mat-form-field class="w-100" appearance="outline">
             <mat-label>Mode of Payment</mat-label>
-            <mat-select (selectionChange)="paymentMode(mode.value)" #mode>
+            <mat-select (selectionChange)="paymentMode(mode.value)" #mode formControlName="payment_mode">
               <mat-option disabled >Select Payment Mode</mat-option>
               <mat-option value="cash">Cash</mat-option>
               <mat-option value="card">Card</mat-option>
@@ -97,7 +97,7 @@
         <div class="col-12 col-md-3 col-lg-3">
           <mat-form-field class="w-100" appearance="outline" *ngIf="transactionShow === true">
             <mat-label>Transaction ID</mat-label>
-            <input matInput>
+            <input matInput formControlName="transactionID">
           </mat-form-field>
         </div>
       </div>
@@ -110,73 +110,67 @@
   
       <div class="row my-2">
         <div class="col-12">
-  
-          <table mat-table [dataSource]="DrugsData" class="w-100 border">
-            
-            <ng-container matColumnDef="id">
-              <th mat-header-cell class="text-center" *matHeaderCellDef>#</th>
-              <td mat-cell class="text-center" *matCellDef="let row">{{ row.id }}</td>
-            </ng-container>
-  
-            <ng-container matColumnDef="drugInfo">
-              <th mat-header-cell class="text-center" *matHeaderCellDef>Drug Info</th>
-              <td mat-cell class="text-center" *matCellDef="let row">{{ row.drugInfo }}</td>
-            </ng-container>
-      
-            <ng-container matColumnDef="batchInfo">
-              <th mat-header-cell class="text-center" *matHeaderCellDef>Batch</th>
-              <td mat-cell class="text-center" *matCellDef="let row">{{ row.batchInfo }}</td>
-            </ng-container>
-      
-            <ng-container matColumnDef="quantity">
-              <th mat-header-cell class="text-center" *matHeaderCellDef>Quantity</th>
-              <td mat-cell class="text-center" *matCellDef="let row;let i = index;">
-                <mat-form-field appearance="outline" class="w-50">
-                  <mat-label>Quantity</mat-label>
-                  <input type="text" #qty (input)="calculate(qty.value, i)" matInput >
-                </mat-form-field>
-              </td>
-            </ng-container>
-      
-            <ng-container matColumnDef="cost">
-              <th mat-header-cell class="text-center" *matHeaderCellDef>Unit Cost</th>
-              <td mat-cell class="text-center" *matCellDef="let row">{{ row.cost }}</td>
-            </ng-container>
-      
-            <ng-container matColumnDef="amount">
-              <th mat-header-cell class="text-center" *matHeaderCellDef>Amount</th>
-              <td mat-cell class="text-center" *matCellDef="let row;let i = index">{{ row.amount.toFixed(2) }}</td>
-            </ng-container>
-            
-            <ng-container matColumnDef="disc">
-              <th mat-header-cell class="text-center" *matHeaderCellDef>
-                <mat-checkbox (change)="discount($event)">Discount</mat-checkbox>
-              </th>
-              <td mat-cell class="text-center" *matCellDef="let row">
-                <p *ngIf="openDisc == false">{{ row.disc }}</p>
-                <mat-form-field appearance="outline" class="w-25" *ngIf="openDisc == true">
-                  <mat-label>Discount</mat-label>
-                  <input matInput name="" [(ngModel)]="row.max_disc">
-                </mat-form-field>
-              </td>
-            </ng-container>
-      
-            <ng-container matColumnDef="toPay">
-              <th mat-header-cell class="text-center" *matHeaderCellDef>To Pay</th>
-              <td mat-cell class="text-center" *matCellDef="let row">{{ row.toPay.toFixed(2) }}</td>
-            </ng-container>
-      
-            <ng-container matColumnDef="actions">
-              <th mat-header-cell class="text-center" *matHeaderCellDef>Actions</th>
-              <td mat-cell class="text-center" *matCellDef="let row;let i = index">
-                <button mat-button color="warn" (click)="removeDrug(i)"><mat-icon>delete</mat-icon></button>
-              </td>
-            </ng-container>
-  
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      
-          </table>    
+
+          <table class="table text-center table-bordered align-baseline drugsTable" formArrayName="drugFields">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Drug Info</th>
+                <th>Batch Info</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Amount</th>
+                <th><mat-checkbox (change)="discount($event)">Discount</mat-checkbox></th>
+                <th>To Pay</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p of DrugsData;let i = index;"  [formGroupName]="i">
+                <td>{{ i + 1 }}</td>
+                <td>
+                  <span class="font-weight-bold">{{ p.drugInfo }}</span>
+                  <input type="hidden" formControlName="drug_id" [(ngModel)]="p.drugId">
+                </td>
+                <td>
+                  <span class="font-weight-bold">#{{ p.batchInfo }}</span>
+                  <input type="hidden" formControlName="batch_no" [(ngModel)]="p.batchInfo">
+                </td>
+                <td>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Quantity *</mat-label>
+                    <input matInput #qty (input)="calculate(qty.value, i)" formControlName="qty">
+                  </mat-form-field>
+                </td>
+                <td>
+                  <span class="font-weight-bold">{{ p.cost }}</span>                  
+                  <input type="hidden" formControlName="unit_price" [(ngModel)]="p.cost">
+                </td>
+                <td>
+                  <span class="font-weight-bold">{{ p.amount }}</span>
+                  <input type="hidden" formControlName="amount" [(ngModel)]="p.amount">
+                </td>
+                <td> 
+                  <span class="font-weight-bold" *ngIf="openDisc === false">{{ p.disc }}</span>
+                  <mat-form-field appearance="outline" *ngIf="openDisc === true">
+                    <mat-label>Discount</mat-label>
+                    <input matInput [(ngModel)]="p.max_disc" formControlName="discount">
+                    <mat-icon matSuffix>percent</mat-icon>
+                  </mat-form-field>
+                </td>
+                <td>
+                  <span class="font-weight-bold">{{ p.toPay }}</span>
+                  <input type="hidden" formControlName="disc_amount" [(ngModel)]="p.toPay">
+                  <input type="hidden" formControlName="cgst" [(ngModel)]="p.cgst">
+                  <input type="hidden" formControlName="igst" [(ngModel)]="p.igst">
+                  <input type="hidden" formControlName="sgst" [(ngModel)]="p.sgst">
+                </td>
+                <td>
+                  <button mat-mini-fab color="warn" class="ms-2" (click)="removeDrug(i)"><i class="fas fa-trash"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
   
         </div>
         <div class="col-12 my-2">

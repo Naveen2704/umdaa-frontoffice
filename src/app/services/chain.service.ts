@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { base_url } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { Observable } from 'rxjs';
-
 @Injectable({
   providedIn: 'root'
 })
 export class ChainService {
   
   userData : any;
+  header = new HttpHeaders({ 'content-type': 'application/json' });
   constructor(private loading: LoadingController, private http: HttpClient) { 
     // console.log(localStorage.getItem('userInfo'));
   }
@@ -49,10 +49,17 @@ export class ChainService {
     await loader.present()
     let fd = new FormData();
     for (var key in data) {
-      fd.append(key, data[key]);
+      if(typeof(data[key]) == "object") {
+        var dat = JSON.stringify(data[key])
+        fd.append(key, dat);
+      }
+      else {
+        fd.append(key, data[key]);
+      }
     }
     fd.append('clinic_id', this.userData.clinic_id)
     fd.append('user_id', this.userData.user_id)
+    
     this.http.post(url, fd).subscribe(async (res: any) => {
       if(res.code === '200'){
         this.showAlert('Success', 'Data Saved Successfully', 'success','#0f0')

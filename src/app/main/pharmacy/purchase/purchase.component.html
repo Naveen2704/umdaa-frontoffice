@@ -11,60 +11,72 @@
   <div class="container-fluid my-3">
     <div class="row">
       <div class="col-md-12">
-        <table mat-table [dataSource]="ordersData" class="w-100 border" *ngIf="ordersData.length > 0">
+        <table mat-table [dataSource]="ordersSource" class="w-100 border">
             <ng-container matColumnDef="id">
               <th mat-header-cell *matHeaderCellDef>#</th>
-              <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+              <td mat-cell *matCellDef="let row" class="text-center">{{ row.id }}</td>
             </ng-container>
   
             <ng-container matColumnDef="invInfo">
-              <th mat-header-cell *matHeaderCellDef>Invoice Info</th>
+              <th mat-header-cell *matHeaderCellDef class="text-start">Invoice No</th>
               <td mat-cell *matCellDef="let row">
-                <p class="font-weight-bold mb-1">{{ row.invoice_no }}</p>
-                <p class="m-0">{{ row.invoice_date }}</p>
+                <p class="font-weight-bold m-0">{{ row.invoice_no }}</p>
+              </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="invDate">
+              <th mat-header-cell *matHeaderCellDef>Invoice Date</th>
+              <td mat-cell *matCellDef="let row">
+                <p class="font-weight-bold m-0">{{ row.order_date }}</p>
               </td>
             </ng-container>
   
             <ng-container matColumnDef="customerInfo">
               <th mat-header-cell *matHeaderCellDef>Customer Info</th>
               <td mat-cell *matCellDef="let row">
-                <p class="font-weight-bold mb-1">{{ row.customer_name }}</p>
+                <p class="font-weight-bold m-0">{{ row.guest_name }}</p>
+              </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="mobile">
+              <th mat-header-cell *matHeaderCellDef>Mobile No.</th>
+              <td mat-cell *matCellDef="let row">
                 <p class="m-0">{{ row.mobile }}</p>
               </td>
             </ng-container>
   
             <ng-container matColumnDef="cost">
-              <th mat-header-cell *matHeaderCellDef>Cost</th>
+              <th mat-header-cell *matHeaderCellDef>Total Amount</th>
               <td mat-cell *matCellDef="let row">
-                <p class="font-weight-bold mb-1">{{ row.cost }}</p>
-              </td>
-            </ng-container>
-  
-            <ng-container matColumnDef="discount">
-              <th mat-header-cell *matHeaderCellDef>Discount</th>
-              <td mat-cell *matCellDef="let row">
-                <p class="font-weight-bold mb-1">{{ row.discount }}</p>
+                <p class="font-weight-bold m-0">{{ row.total_amount }}</p>
               </td>
             </ng-container>
   
             <ng-container matColumnDef="amount_paid">
-              <th mat-header-cell *matHeaderCellDef>Amount</th>
+              <th mat-header-cell *matHeaderCellDef>Amount Paid</th>
               <td mat-cell *matCellDef="let row">
-                <p class="font-weight-bold mb-1">{{ row.amount }}</p>
+                <p class="font-weight-bold m-0">{{ row.billing_amount }}</p>
               </td>
             </ng-container>
   
-            <ng-container matColumnDef="status">
-              <th mat-header-cell *matHeaderCellDef>Status</th>
+            <ng-container matColumnDef="payment_mode">
+              <th mat-header-cell *matHeaderCellDef>Payment Mode</th>
               <td mat-cell *matCellDef="let row">
-                <p class="font-weight-bold mb-1">{{ row.status }} through {{ row.payment_mode }}</p>
+                <p class="font-weight-bold m-0">{{ row.payment_mode }}</p>
+              </td>
+            </ng-container>
+  
+            <ng-container matColumnDef="transaction_id">
+              <th mat-header-cell *matHeaderCellDef>Transaction ID</th>
+              <td mat-cell *matCellDef="let row">
+                <p class="font-weight-bold m-0">{{ row.transaction_id }}</p>
               </td>
             </ng-container>
   
             <ng-container matColumnDef="actions">
               <th mat-header-cell *matHeaderCellDef>Actions</th>
               <td mat-cell *matCellDef="let row">
-                <button mat-button color="primary" (click)="viewInvoice(row.billing_id)">View Invoice</button>
+                <button mat-raised-button color="primary" (click)="viewInvoice(row.billing_id)">View Invoice</button>
               </td>
             </ng-container>
   
@@ -72,9 +84,6 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
         
-        <div class="text-center" *ngIf="ordersData.length === 0">
-          <h3>No Orders Found</h3>
-        </div>
       </div>
     </div>
   </div>

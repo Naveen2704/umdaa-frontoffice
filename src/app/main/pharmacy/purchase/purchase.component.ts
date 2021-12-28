@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource } from '@angular/material/table';
+import { ChainService } from 'src/app/services/chain.service';
 import { OrdersList } from '../interfaces/orders-list';
 
 @Component({
@@ -9,10 +11,24 @@ import { OrdersList } from '../interfaces/orders-list';
 export class PurchaseComponent implements OnInit {
 
   ordersData: OrdersList[] = [];
-  displayedColumns: string[] = ['id','invInfo','customerInfo','cost','discount','amount_paid','status','actions'];
+  ordersSource = new MatTableDataSource(this.ordersData);
+  displayedColumns: string[] = ['id','invInfo','invDate','customerInfo','mobile','cost','amount_paid','payment_mode','transaction_id','actions'];
 
-  constructor() { }
+  constructor(private service: ChainService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.ordersList()
+  }
+
+  ordersList() {
+    let userData = JSON.parse(localStorage.getItem('userInfo'))
+    this.service.getData('orders', userData.clinic_id).subscribe((res: any) => {
+      if(res.code === '200') {
+        this.ordersData = res.result.ordersData;
+        this.ordersSource = new MatTableDataSource(this.ordersData)
+        console.log(this.ordersSource)
+      }
+    });
+  }
 
 }
