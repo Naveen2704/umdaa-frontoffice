@@ -15,6 +15,17 @@
     </ion-toolbar>
   </ion-header>
   <ion-content>
+    
+      <!-- fab placed in the center of the content with a list on each side -->
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button color="dark">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-list side="top">
+          <ion-fab-button color="primary"><ion-icon name="list"></ion-icon></ion-fab-button>
+          <ion-fab-button color="danger" routerLink="/newOrder"><ion-icon name="cart"></ion-icon></ion-fab-button>
+        </ion-fab-list>
+      </ion-fab>
       <ion-split-pane contentId="content" class="app-sidemenu" when="(min-width:992px)">
   
           <ion-menu>
@@ -37,6 +48,7 @@
           
   
           <ion-router-outlet id="content" main class="router-outlet"></ion-router-outlet>
+
           
       </ion-split-pane>
   </ion-content>

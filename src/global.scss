@@ -80,6 +80,19 @@ th,td {
     font-weight: 400 !important;
 }
 
+.hover:hover {
+    cursor: pointer;
+}
+.drugsTable thead tr th {
+    padding: 18px 0 !important;
+}
+.drugsTable tbody td {
+    padding-top: 10px !important;
+}
+.table>:not(:first-child) {
+    border-top: none !important;
+}
+
 // th {
 //     text-align: center !important;
 // }

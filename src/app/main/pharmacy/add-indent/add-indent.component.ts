@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
@@ -26,15 +27,29 @@ export class AddIndentComponent implements OnInit {
   userData: any = [];
   suppliersList: any;
   check: any = "";
+  indentForm: FormGroup;
 
-  constructor(private service: ChainService, private route: ActivatedRoute) { 
+  constructor(private service: ChainService, private route: ActivatedRoute, private form: FormBuilder) { 
     this.route.params.subscribe(params => {
       this.getShortage()
       this.getSuppliers()
     })
+    this.indentForm = this.form.group({
+      indentFields: this.form.array([])
+    });
   }
 
   ngOnInit() {}
+
+  addFields() {
+    const indentField = this.indentForm.controls.indentFields as FormArray
+    indentField.push(this.form.group({
+      drug_id: ['', Validators.required],
+      batch_no: ['', Validators.required],
+      reqQty: ['', Validators.required],
+      supplierInfo: ['', Validators.required]
+    }))
+  }
 
   applyFilter(event: Event) {
     var filterValue = (event.target as HTMLInputElement).value;
@@ -52,6 +67,7 @@ export class AddIndentComponent implements OnInit {
       if(res.code === '200') {
         this.indentList = res.result.inventory;
         this.indentSource = new MatTableDataSource(this.indentList);
+        this.addFields()
       }
     });
   }

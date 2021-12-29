@@ -23,6 +23,51 @@
 
     <div class="row">
       <div class="col-12">
+
+        <table class="table table-bordered drugsTable text-center align-baseline">
+          <thead>
+            <tr>
+              <th><mat-checkbox></mat-checkbox></th>
+              <th>Drug Info</th>
+              <th>Batch Info</th>
+              <th>Ava. QTY</th>
+              <th>Expiry Info</th>
+              <th>Status</th>
+              <th>Req. QTY</th>
+              <th>Supplier Info</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of indentList; let i = index">
+              <td>
+                <mat-checkbox></mat-checkbox>
+              </td>
+              <td>
+                <span class="text-primary">{{ p.trade_name }}</span>
+              </td>
+              <td>
+                {{ p.batch_no }}
+              </td>
+              <td>
+                {{ p.quantity }}
+              </td>
+              <td>
+                {{ p.trade_name }}
+              </td>
+              <td>
+                {{ p.expiry_date }}
+              </td>
+              <td>
+                {{ p.status }}
+              </td>
+              <td>
+                {{ p.trade_name }}
+              </td>
+              
+            </tr>
+          </tbody>
+        </table>
+
         <table class="w-100 border table-bordered my-2" mat-table [dataSource]="indentSource" matSort matSortActive="id" matSortDirection="asc">
 
          <ng-container matColumnDef="id">

@@ -6,6 +6,7 @@ import { MatInput } from '@angular/material/input';
 import { MatTable } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ChainService } from 'src/app/services/chain.service';
+import { PurchaseComponent } from '../purchase/purchase.component';
 
 export interface Drugs {
   id: number,
@@ -32,6 +33,7 @@ export class NewOrderComponent implements OnInit {
 
   DrugsData: Drugs[] = [];
   displayedColumns: string[] = ['id','drugInfo','batchInfo','quantity','cost','amount','disc','toPay','actions'];
+
 
   @ViewChild(MatTable) table: MatTable<Drugs>;
   @ViewChild(MatInput) drugsInp: MatInput;

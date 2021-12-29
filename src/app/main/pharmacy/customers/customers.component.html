@@ -21,7 +21,9 @@
          <table class="w-100 border my-2" mat-table [dataSource]="custSource" matSort matSortActive="id" matSortDisableClear matSortDirection="desc">
 
           <ng-container matColumnDef="select">
-            <th mat-header-cell *matHeaderCellDef>&nbsp;</th>
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox ></mat-checkbox>
+            </th>
             <td mat-cell *matCellDef="let row">
               <mat-checkbox></mat-checkbox>
             </td>
@@ -50,7 +52,7 @@
           <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td mat-cell *matCellDef="let row">
-              <button mat-button>Send SMS</button>
+              <button mat-raised-button color="primary">Send SMS</button>
             </td>
           </ng-container>     
 
@@ -60,7 +62,7 @@
          </table>
       </div>
     </div>
-    <mat-paginator [length]="custSource.length" [pageSize]="30"></mat-paginator>
+    <mat-paginator [length]="custSource.filteredData.length" [pageSize]="30"></mat-paginator>
   </div>
 
 </ion-content>
