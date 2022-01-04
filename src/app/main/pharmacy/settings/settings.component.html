@@ -11,11 +11,126 @@
     <div class="row">
       <div class="col-12">
         <mat-tab-group color="primary">
-          <mat-tab label="Pharmacy Info">
-            
+          <mat-tab label="Basic Information">
+            <form [formGroup]="InfoForm">
+              <ion-list-header class="bg-dark text-warning mb-2">
+                <ion-label>Pharmacy Information</ion-label>
+              </ion-list-header>
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-3 col-12 mb-2">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Pharmacy Name *</mat-label>
+                      <input matInput formControlName="name">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-3 col-12 mb-2">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Phone / Mobile *</mat-label>
+                      <input matInput formControlName="mobile">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-3 col-12 mb-2">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Email *</mat-label>
+                      <input matInput formControlName="email">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-3 col-12 mb-2">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Max Discount *</mat-label>
+                      <input matInput formControlName="max_disc">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-3 col-12 mb-2">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>GSTIN *</mat-label>
+                      <input matInput formControlName="gst">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-9 col-12 mb-2">
+                    <mat-form-field appearance="outline" class="w-100">
+                      <mat-label>Address *</mat-label>
+                      <input matInput formControlName="address">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-md-4 col-12 mb-2">
+                    <input type="file" name="" id="" class="custom-file-input my-2 d-block" (change)="readUrl($event)">
+                    <img width="100" height="100" alt="" [src]="noFileImg">
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-12">
+                    <button color="primary" mat-raised-button>Submit</button>
+                  </div>
+                </div>
+
+              </div>
+            </form>
+
           </mat-tab>
           <mat-tab label="Print Settings">
+            <ion-list-header class="bg-dark text-warning">
+              <ion-label>Print Settings</ion-label>
+            </ion-list-header>
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-4">
+                  <ion-item lines="none">
+                    <ion-label class="d-block">Paper Type</ion-label>
+                    <mat-radio-group>
+                      <mat-radio-button value="A4" class="mx-2">A4</mat-radio-button>
+                      <mat-radio-button value="A6" class="mx-2">A6</mat-radio-button>
+                    </mat-radio-group>
+                  </ion-item>
+                </div>
+                <div class="col-md-12">
+                  <ion-item>
+                    <ion-label class="font-weight-bold">Header on Invoice</ion-label>
+                  </ion-item>
+                  <div class="row p-2">
+                    <div class="col-12 py-2">
+                      <mat-radio-group>
+                        <mat-radio-button value="1" class="mx-2">Automated Header</mat-radio-button>
+                        <mat-radio-button value="2" class="mx-2">Self Header</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                    <div class="col-md-3 col-12 mt-2 px-4">
+                      <mat-form-field appearance="outline" class="d-block">
+                        <mat-label>Header Height (In CMS)</mat-label>
+                        <input matInput>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="col-md-12 mt-2">
+                  <ion-item>
+                    <ion-label class="font-weight-bold">Footer on Invoice</ion-label>
+                  </ion-item>
+                  <div class="row p-2">
+                    <div class="col-12 py-2">
+                      <mat-radio-group>
+                        <mat-radio-button value="1" class="mx-2">Automated Footer</mat-radio-button>
+                        <mat-radio-button value="2" class="mx-2">Self Footer</mat-radio-button>
+                      </mat-radio-group>
+                    </div>
+                    <div class="col-md-3 col-12 mt-2 px-4">
+                      <mat-form-field appearance="outline" class="d-block">
+                        <mat-label>Footer Height (In CMS)</mat-label>
+                        <input matInput>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
 
+                <div class="col-md-12 my-2">
+                  <button color="primary" mat-raised-button>Submit</button>
+                </div>
+
+              </div>
+            </div>
           </mat-tab>
         </mat-tab-group>
       </div>

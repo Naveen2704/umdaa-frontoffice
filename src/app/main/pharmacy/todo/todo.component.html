@@ -1,0 +1,32 @@
+<ion-content>
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="end">
+        <button mat-button color="warn" (click)="dismiss()">Close</button>
+      </ion-buttons>
+      <ion-title><ion-icon name="create"></ion-icon> Create To-Do</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <form action="">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <p class="my-2 text-secondary">Set reminder for your actions</p>
+          <mat-form-field appearance="outline" class="w-100 mb-2 mt-2">
+            <mat-label>Title *</mat-label>
+            <input type="" matInput name="" value="">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100 mb-2">
+            <mat-label>Date *</mat-label>
+            <input type="" matInput name="" value="">
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="w-100 mb-2">
+            <mat-label>Description *</mat-label>
+            <textarea rows="6" matInput name="" value=""></textarea>
+          </mat-form-field>
+          <button mat-raised-button color="primary">Save Action</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</ion-content>

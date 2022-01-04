@@ -7,6 +7,9 @@
       <ion-title>
         <i class="fas fa-indent"></i> Indent
       </ion-title>
+      <ion-buttons slot="end">
+        <button color="primary" mat-raised-button (click)="raiseIndent()">Raise Indent</button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
@@ -27,12 +30,11 @@
         <table class="table table-bordered drugsTable text-center align-baseline">
           <thead>
             <tr>
-              <th><mat-checkbox></mat-checkbox></th>
+              <th>#</th>
               <th>Drug Info</th>
               <th>Batch Info</th>
               <th>Ava. QTY</th>
               <th>Expiry Info</th>
-              <th>Status</th>
               <th>Req. QTY</th>
               <th>Supplier Info</th>
             </tr>
@@ -40,7 +42,7 @@
           <tbody>
             <tr *ngFor="let p of indentList; let i = index">
               <td>
-                <mat-checkbox></mat-checkbox>
+                {{ i+1 }}
               </td>
               <td>
                 <span class="text-primary">{{ p.trade_name }}</span>
@@ -52,91 +54,28 @@
                 {{ p.quantity }}
               </td>
               <td>
-                {{ p.trade_name }}
-              </td>
-              <td>
                 {{ p.expiry_date }}
               </td>
-              <td>
-                {{ p.status }}
+              <td style="width: 100px;">
+                <mat-form-field appearance="outline">
+                  <mat-label>Required Quantity * </mat-label>
+                  <input type="" matInput #qty [disabled]="reqDisabled">
+                </mat-form-field>
               </td>
-              <td>
-                {{ p.trade_name }}
+              <td style="width: 150px;">
+                <mat-form-field appearance="outline">
+                  <mat-label>Supplier Info *</mat-label>
+                  <mat-select>
+                    <mat-option disabled >Select Supplier</mat-option>
+                    <mat-option *ngFor="let p of suppliersList" [value]="p.supplier_id">{{ p.store_name }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
               </td>
               
             </tr>
           </tbody>
         </table>
 
-        <table class="w-100 border table-bordered my-2" mat-table [dataSource]="indentSource" matSort matSortActive="id" matSortDirection="asc">
-
-         <ng-container matColumnDef="id">
-           <th class="text-center" mat-header-cell *matHeaderCellDef>
-            <mat-checkbox color="primary" #checkAll (change)="toggleAll($event)"></mat-checkbox>
-           </th>
-           <td class="text-center" mat-cell *matCellDef="let row;let i = index">
-             <mat-checkbox color="primary" [checked]="check"></mat-checkbox>
-           </td>
-         </ng-container>  
-
-         <ng-container matColumnDef="drugInfo">
-           <th class="text-start" mat-header-cell *matHeaderCellDef>Drug Info</th>
-           <td mat-cell *matCellDef="let row">
-             <p class="font-weight-bold mb-0">{{ row.trade_name }} <span class="badge bg-dark float-end">{{ row.formulation }}</span></p>
-           </td>
-         </ng-container> 
-
-         <ng-container matColumnDef="batchInfo">
-           <th mat-header-cell *matHeaderCellDef>Batch Info</th>
-           <td mat-cell *matCellDef="let row">
-             <p class="font-weight-bold mb-1 text-center">#{{ row.batch_no }}</p>
-           </td>
-         </ng-container>  
-
-         <ng-container matColumnDef="qty">
-           <th mat-header-cell *matHeaderCellDef>Ava. QTY</th>
-           <td class="text-center" mat-cell *matCellDef="let row">{{ row.quantity }}</td>
-         </ng-container>  
-
-         <ng-container matColumnDef="expiryInfo">
-           <th mat-header-cell *matHeaderCellDef>Expiry Info</th>
-           <td class="text-center" mat-cell *matCellDef="let row">{{ row.expiry_date }}</td>
-         </ng-container>  
-
-         <ng-container matColumnDef="status">
-           <th mat-header-cell *matHeaderCellDef>Status</th>
-           <td class="text-center" mat-cell *matCellDef="let row">{{ row.status }}</td>
-         </ng-container>  
-
-         <ng-container matColumnDef="required">
-           <th mat-header-cell *matHeaderCellDef>Req. QTY</th>
-           <td class="text-center" mat-cell *matCellDef="let row">
-             <mat-form-field appearance="outline">
-               <mat-label>Req. QTY</mat-label>
-               <input type="text" matInput name="" value="">
-             </mat-form-field>
-           </td>
-         </ng-container>              
-
-         <ng-container matColumnDef="vendor">
-           <th mat-header-cell *matHeaderCellDef>Supplier Info</th>
-           <td class="text-center" mat-cell *matCellDef="let row">
-            <mat-form-field appearance="outline">
-              <mat-label>Supplier Info</mat-label>
-              <mat-select [(ngModel)]="row.vendor_id">
-                <mat-option>None</mat-option>
-                <mat-option *ngFor="let p of suppliersList" [value]="p.supplier_id">{{ p.store_name }}</mat-option>
-              </mat-select>
-            </mat-form-field>
-           </td>
-         </ng-container>     
-
-         <tr mat-header-row *matHeaderRowDef="indentCols"></tr>
-         <tr mat-row *matRowDef="let row; columns: indentCols;"></tr>
-
-        </table>
-
-        <mat-paginator [length]="indentSource.filteredData.length" [pageSizeOptions]="[10, 25, 50, 100]" [pageSize]="5"></mat-paginator>
       </div>
     </div>
 

@@ -25,6 +25,8 @@ import { AddSupplierComponent } from './main/pharmacy/add-supplier/add-supplier.
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddIndentComponent } from './main/pharmacy/add-indent/add-indent.component';
 import { GstComponent } from './main/pharmacy/gst/gst.component';
+import { TodoComponent } from './main/pharmacy/todo/todo.component';
+import { ToDoListsComponent } from './main/pharmacy/to-do-lists/to-do-lists.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { GstComponent } from './main/pharmacy/gst/gst.component';
     NewOrderComponent,
     AddSupplierComponent,
     AddIndentComponent,
-    GstComponent
+    GstComponent,
+    TodoComponent,
+    ToDoListsComponent
   ],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,

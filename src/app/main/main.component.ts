@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { ToDoListsComponent } from './pharmacy/to-do-lists/to-do-lists.component';
+import { TodoComponent } from './pharmacy/todo/todo.component';
 
 @Component({
   selector: 'app-main',
@@ -20,7 +23,7 @@ export class MainComponent implements OnInit {
     { title: 'Reports', url: '/pharmacy_reports', icon: 'fa-chart-line' },
   ];
 
-  constructor(private route: ActivatedRoute, private router: Router) { 
+  constructor(private route: ActivatedRoute, private router: Router, private modal: ModalController) { 
     this.selectedUrl = router.url
   }
 
@@ -31,5 +34,24 @@ export class MainComponent implements OnInit {
     console.log(url)
     this.selectedUrl = url
   }
+
+  async createNewAction() {
+    const modal = await this.modal.create({
+      component: TodoComponent,
+      animated: true,
+      cssClass: 'modal-sm-ion'
+    })
+    return await modal.present()
+  }
+
+  async todolist() {
+    const modal = await this.modal.create({
+      component: ToDoListsComponent,
+      cssClass: 'modal-sm-ion',
+      animated: true
+    })
+    return await modal.present()
+  }
+
 
 }

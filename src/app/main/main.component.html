@@ -22,7 +22,8 @@
           <ion-icon name="add"></ion-icon>
         </ion-fab-button>
         <ion-fab-list side="top">
-          <ion-fab-button color="primary"><ion-icon name="list"></ion-icon></ion-fab-button>
+          <ion-fab-button color="primary" (click)="todolist()" title="To-Do List"><ion-icon name="list"></ion-icon></ion-fab-button>
+          <ion-fab-button color="dark" (click)="createNewAction()" title="Create New To Do List"><ion-icon name="create"></ion-icon></ion-fab-button>
           <ion-fab-button color="danger" routerLink="/newOrder"><ion-icon name="cart"></ion-icon></ion-fab-button>
         </ion-fab-list>
       </ion-fab>
