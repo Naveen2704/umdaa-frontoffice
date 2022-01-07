@@ -27,6 +27,20 @@ export class ChainService {
     })
   }
 
+  showConfirm(title, message, icon, color) {
+    Swal.fire({
+      title: title,
+      html: message,
+      icon: icon,
+      iconColor: color,
+      showConfirmButton: true,
+      showLoaderOnConfirm: true,
+      showCancelButton: true
+    }).then((res)=>{
+      return res;
+    })
+  }
+
   getData(method, clinic_id = '', id = ''): Observable<any>{
     var url;
     if(id === '') {
@@ -39,7 +53,7 @@ export class ChainService {
     return data;
   }
 
-  async insertData(method, data){
+  async insertData(method, data, file: any = ''){
     this.userData = JSON.parse(localStorage.getItem('userInfo'))
     let url = base_url + "/" + method;
     console.log(data)
@@ -59,6 +73,9 @@ export class ChainService {
     }
     fd.append('clinic_id', this.userData.clinic_id)
     fd.append('user_id', this.userData.user_id)
+    if(file != "") {
+      fd.append('pharmacy_logo', file)
+    }
     
     this.http.post(url, fd).subscribe(async (res: any) => {
       if(res.code === '200'){

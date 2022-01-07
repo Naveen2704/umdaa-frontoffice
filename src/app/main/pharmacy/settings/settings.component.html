@@ -12,7 +12,7 @@
       <div class="col-12">
         <mat-tab-group color="primary">
           <mat-tab label="Basic Information">
-            <form [formGroup]="InfoForm">
+            <form [formGroup]="InfoForm" (ngSubmit)="saveSettings()">
               <ion-list-header class="bg-dark text-warning mb-2">
                 <ion-label>Pharmacy Information</ion-label>
               </ion-list-header>
@@ -21,37 +21,37 @@
                   <div class="col-md-3 col-12 mb-2">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>Pharmacy Name *</mat-label>
-                      <input matInput formControlName="name">
+                      <input matInput formControlName="name" [(ngModel)]="settingsInfo.name">
                     </mat-form-field>
                   </div>
                   <div class="col-md-3 col-12 mb-2">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>Phone / Mobile *</mat-label>
-                      <input matInput formControlName="mobile">
+                      <input matInput formControlName="mobile" [(ngModel)]="settingsInfo.mobile">
                     </mat-form-field>
                   </div>
                   <div class="col-md-3 col-12 mb-2">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>Email *</mat-label>
-                      <input matInput formControlName="email">
+                      <input matInput formControlName="email" [(ngModel)]="settingsInfo.email">
                     </mat-form-field>
                   </div>
                   <div class="col-md-3 col-12 mb-2">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>Max Discount *</mat-label>
-                      <input matInput formControlName="max_disc">
+                      <input matInput formControlName="max_disc" [(ngModel)]="settingsInfo.max_disc">
                     </mat-form-field>
                   </div>
                   <div class="col-md-3 col-12 mb-2">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>GSTIN *</mat-label>
-                      <input matInput formControlName="gst">
+                      <input matInput formControlName="gst" [(ngModel)]="settingsInfo.gst">
                     </mat-form-field>
                   </div>
                   <div class="col-md-9 col-12 mb-2">
                     <mat-form-field appearance="outline" class="w-100">
                       <mat-label>Address *</mat-label>
-                      <input matInput formControlName="address">
+                      <input matInput formControlName="address" [(ngModel)]="settingsInfo.address">
                     </mat-form-field>
                   </div>
                   <div class="col-md-4 col-12 mb-2">

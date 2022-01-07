@@ -7,15 +7,18 @@
     </ion-toolbar>
   </ion-header>
   <div class="container-fluid">
+
     <div class="row">
       <div class="col-md-4 col-12 my-3">
         <ion-card class="bg-warning">
           <ion-card-header class="pb-0">
-            <ion-card-title class="text-dark">GST Filed<mat-icon class="float-end hover">info</mat-icon></ion-card-title>
-            <h5 class="mb-2 text-dark">From 2021/12/29 To 2021/12/29</h5>
+            <ion-card-title class="text-dark">GST Filed
+              <!-- <mat-icon class="float-end hover">info</mat-icon> -->
+            </ion-card-title>
+            <h5 class="mb-2 text-dark">From {{ gstList.gstPaidDateMin }} To {{ gstList.gstPaidDateMax }}</h5>
           </ion-card-header>
           <ion-card-content>
-            <h1 class="mb-0 text-dark">0.00</h1>
+            <h1 class="mb-0 text-dark">{{ gstList.gstPaid }}</h1>
           </ion-card-content>
         </ion-card>
       </div>
@@ -23,11 +26,11 @@
       <div class="col-md-4 col-12 my-3">
         <ion-card class="bg-primary text-white">
           <ion-card-header class="pb-0">
-            <ion-card-title class="text-white">GST To be Filed<mat-icon class="float-end hover">info</mat-icon></ion-card-title>
-            <h5 class="mb-2 text-white">From 2021/12/29</h5>
+            <ion-card-title class="text-white">GST To be Filed<mat-icon class="float-end hover" (click)="gstToBe(gstList.gstTobePaid, gstList.gstTobePaidDateMin)">info</mat-icon></ion-card-title>
+            <h5 class="mb-2 text-white">From {{ gstList.gstTobePaidDateMin }}</h5>
           </ion-card-header>
           <ion-card-content>
-            <h1 class="mb-0 text-white">{{ toPaid }}</h1>
+            <h1 class="mb-0 text-white">{{ gstList.gstTobePaid }}</h1>
           </ion-card-content>
         </ion-card>
       </div>
@@ -35,11 +38,13 @@
       <div class="col-md-4 col-12 my-3">
         <ion-card class="bg-success">
           <ion-card-header class="pb-0">
-            <ion-card-title class="text-white">Profit Gained<mat-icon class="float-end hover">info</mat-icon></ion-card-title>
-            <h5 class="mb-2 text-white">From 2021/12/29</h5>
+            <ion-card-title class="text-white">Profit Gained
+              <!-- <mat-icon class="float-end hover">info</mat-icon> -->
+            </ion-card-title>
+            <h5 class="mb-2 text-white">From {{ gstList.profitMinDate }}</h5>
           </ion-card-header>
           <ion-card-content>
-            <h1 class="mb-0 text-white">{{ profit }}</h1>
+            <h1 class="mb-0 text-white">{{ gstList.profit }}</h1>
           </ion-card-content>
         </ion-card>
       </div>

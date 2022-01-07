@@ -27,12 +27,22 @@
 
 
 @import url('https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Lato:wght@300;400;900&display=swap');
-html,body,tr,td,li,a,span,p,label,h1,h2,h3,h4,h5,h6,div,section,input,textarea,select,button,mat-label,ion-label,ion-card,ion-card-content,ion-card-header,ion-segment-button,ion-segment,ion-button,ion-title {
+html,body,tr,td,li,a,span,p,label,h1,h2,h3,h4,h5,h6,div,section,input,textarea,select,button,mat-label,ion-label,ion-card,ion-card-content,ion-card-header,ion-segment-button,ion-segment,ion-button,ion-title,g,text {
     font-family: "Jost", sans-serif !important;
 }
 
+
 h2.swal2-title {
     margin-bottom: 5px !important;
+}
+
+.font-weight-bold {
+    font-weight: 500;
+}
+
+.invoice-modal {
+    --width: 1000px;
+    --height: 600px;
 }
 
 div.swal2-html-container {

@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Gst To Be Filed</ion-title>
+    <button slot="end" color="warn" (click)="dismiss()" mat-button class="me-2">Close</button>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="container-fluid my-5 text-center">
+    <h1 class="text-center my-5 pt-5" style="font-size: 48px;">{{ value }}
+      <span class="d-block small pt-3" style="font-size: 16px">GST to be filed from {{ date }} </span>
+    </h1>
+
+    <button color="primary" mat-raised-button (click)="cleargst()" *ngIf="value != '0.00'">Clear GST</button>
+  </div>
+</ion-content>

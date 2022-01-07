@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title><i class="fas fa-file-invoice"></i> Invoice</ion-title>
+    <button slot="end" mat-raised-button styleSheetFile="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" printSectionId="printDiv" ngxPrint class="me-2" color="primary">Print Invoice</button>
+    <button slot="end" mat-button (click)="dismiss()" class="me-2" color="warn">Close</button>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <!-- <div class="container text-center my-5 py-5" *ngIf="data == false">
+    <h2>Getting Invoice Details</h2>
+    <mat-progress-bar mode="buffer"></mat-progress-bar>
+  </div> -->
+  <div class="container-fluid" id="printDiv" #printDiv>
+    
+    <!-- HeaderDetails -->
+    <div class="row mt-3 pb-3 border-bottom">
+      <div class="col-md-8 col-8">
+        <div style="width: 350px !important;max-height:100px !important;overflow:hidden !important;margin:0px !important;padding: 0px !important;">
+          <img style="width:auto;height:100px;display:block;object-fit:scale-down;" [src]="pharmacyInfo.logo" alt="">
+        </div>        
+      </div>
+      <div class="col-md-4 col-4 text-end">
+        <p class="fw-bold mb-0">{{ pharmacyInfo.name }}</p>
+        <p class="mb-0">{{ pharmacyInfo.address }}</p>
+        <p class="mb-0 font-weight-bold">{{ pharmacyInfo.mobile }}</p>
+      </div>
+    </div>
+
+    <!-- Patient Details -->
+    <div class="row mt-3 pb-3 border-bottom">
+      <div class="col-md-4 col-4">
+        <p class="font-weight-bold mb-0">{{ billingInfo.guest_name }}</p>
+        <span>{{ billingInfo.age }} {{ billingInfo.age_unit }}  {{ billingInfo.gender }}</span>
+      </div>
+      <div class="col-md-4 col-4 text-center">
+        <p class="font-weight-bold mb-0">Mobile No.</p>
+        <p class="mb-0">{{ billingInfo.mobile }}</p>
+      </div>
+      <div class="col-md-4 col-4 text-end">
+        <p class="font-weight-bold mb-0">Payment Mode</p>
+        <p class="mb-0">{{ billingInfo.payment_mode | uppercase }}</p>
+      </div>
+    </div>
+
+    <!-- Product Details -->
+    <div class="row mt-3 pb-3">
+      <div class="col-12">
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Drug Name</th>
+              <th>Batch Info</th>
+              <th>Quantity</th>
+              <th>Unit Price</th>
+              <th>Amount</th>
+              <th>Discount</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of lineItems;let i = index">
+              <td>{{ i+1 }}</td>
+              <td>
+                <p class="font-weight-bold mb-0">{{ p.item_information }}</p>
+              </td>
+              <td><span>#{{ p.batch_no }}</span></td>
+              <td class="text-center">{{ p.quantity }}</td>
+              <td class="text-center">{{ p.unit_price }}</td>
+              <td class="text-center">{{ p.total_amount }}</td>
+              <td class="text-center">{{ p.discount }}{{ p.discount_unit }}</td>
+              <td class="text-end">{{ p.amount }}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th colspan="7"><p class="mb-0 font-weight-bold text-end">Total Amount</p></th>
+              <th><p class="mb-0 font-weight-bold text-end">{{ billingInfo.billing_amount }}</p></th>
+            </tr>
+          </tfoot>
+        </table>
+        <p class="mt-4 mb-2 font-weight-bold font-italic">Powered By UMDAA.co</p>
+      </div>
+    </div>
+
+  </div>
+</ion-content>

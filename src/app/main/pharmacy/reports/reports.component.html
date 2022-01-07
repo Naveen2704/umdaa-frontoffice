@@ -7,6 +7,33 @@
     </ion-toolbar>
   </ion-header>
   <div class="container-fluid">
-    
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-10 pe-1">
+        <ion-card class="bg-light shadow-none p-0">
+          <ion-card-content class="p-0">
+            <google-chart 
+              title="Pharmacy Sales"
+              type="PieChart"
+              [data]="pieData"
+              [columnNames]="pieColumnNames"
+              [options]="pieOptions" style="height: 50vh;" class="w-100">
+            </google-chart>
+          </ion-card-content>
+        </ion-card>
+      </div>
+      <div class="col-12 col-md-6 ps-1">
+        <ion-card class="bg-light border shadow-none p-0">
+          <ion-card-content class="p-0">
+            <google-chart
+              title="Drugs Sales"
+              type="AreaChart"
+              [data]="BarData"
+              [columnNames]="BarColumnNames"
+              [options]="BarOptions" style="height: 50vh;" class="w-100">
+            </google-chart>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
   </div>
 </ion-content>

@@ -27,6 +27,11 @@ import { AddIndentComponent } from './main/pharmacy/add-indent/add-indent.compon
 import { GstComponent } from './main/pharmacy/gst/gst.component';
 import { TodoComponent } from './main/pharmacy/todo/todo.component';
 import { ToDoListsComponent } from './main/pharmacy/to-do-lists/to-do-lists.component';
+import { GoogleChartsModule } from 'angular-google-charts';
+import { PrescriptionsComponent } from './main/pharmacy/prescriptions/prescriptions.component';
+import { GstTOBeComponent } from './main/pharmacy/gst/gst-tobe/gst-tobe.component';
+import { InvoiceComponent } from './main/pharmacy/purchase/invoice/invoice.component';
+import { NgxPrintModule } from 'ngx-print';
 
 @NgModule({
   declarations: [
@@ -47,7 +52,10 @@ import { ToDoListsComponent } from './main/pharmacy/to-do-lists/to-do-lists.comp
     AddIndentComponent,
     GstComponent,
     TodoComponent,
-    ToDoListsComponent
+    ToDoListsComponent,
+    PrescriptionsComponent,
+    GstTOBeComponent,
+    InvoiceComponent
   ],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
@@ -56,6 +64,8 @@ import { ToDoListsComponent } from './main/pharmacy/to-do-lists/to-do-lists.comp
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    GoogleChartsModule,
+    NgxPrintModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

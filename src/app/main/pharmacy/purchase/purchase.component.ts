@@ -3,8 +3,11 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { ModalController } from '@ionic/angular';
 import { ChainService } from 'src/app/services/chain.service';
 import { OrdersList } from '../interfaces/orders-list';
+import { PrescriptionsComponent } from '../prescriptions/prescriptions.component';
+import { InvoiceComponent } from './invoice/invoice.component';
 
 export interface ViewOptions {
   sortField: string;
@@ -28,7 +31,7 @@ export class PurchaseComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   
-  constructor(private service: ChainService, private route: ActivatedRoute) { }
+  constructor(private service: ChainService, private route: ActivatedRoute, private modalCtrl: ModalController) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -36,8 +39,20 @@ export class PurchaseComponent implements OnInit {
     })    
   }
 
-  naveen() {
-    alert("hi")
+  async viewInvoice(billing_id) {
+    const modal = await this.modalCtrl.create({
+      component: InvoiceComponent,
+      componentProps: { billing_id: billing_id },
+      cssClass: 'invoice-modal'
+    })
+    await modal.present()
+  }
+
+  async prescriptionsModal() {
+    const modal = await this.modalCtrl.create({
+      component: PrescriptionsComponent
+    })
+    await modal.present();
   }
 
   ordersList() {

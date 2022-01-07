@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title><i class="fas fa-prescription"></i> Prescriptions</ion-title>
+    <button slot="end" mat-button color="warn" class="me-2" (click)="dismiss()">Close</button>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="card" *ngFor="let p of prescriptions">
+    <div class="card-body pb-1">
+      <ion-fab-button size="small" color="danger" class="float-end" title="Convert to Order"><ion-icon name="cart"></ion-icon></ion-fab-button>
+      <p class="font-weight-bold">{{ p.patient_name }}</p>
+      <p class="font-weight-bold mb-0">{{ p.doctor_name }}</p>
+    </div>
+    <div class="card-footer">
+      <p class="mb-0">Generated On : {{ p.prescription_date }}</p>
+    </div>
+  </div>
+</ion-content>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { ToDoListsComponent } from './pharmacy/to-do-lists/to-do-lists.component';
 import { TodoComponent } from './pharmacy/todo/todo.component';
 
@@ -23,7 +23,7 @@ export class MainComponent implements OnInit {
     { title: 'Reports', url: '/pharmacy_reports', icon: 'fa-chart-line' },
   ];
 
-  constructor(private route: ActivatedRoute, private router: Router, private modal: ModalController) { 
+  constructor(private route: ActivatedRoute, private router: Router, private modal: ModalController, private loader: LoadingController) { 
     this.selectedUrl = router.url
   }
 
@@ -33,6 +33,16 @@ export class MainComponent implements OnInit {
     // console.log(i)
     console.log(url)
     this.selectedUrl = url
+  }
+
+  async logout() {
+    const load = await this.loader.create({
+      message: 'Logging Out'
+    })
+    load.present()
+    localStorage.clear()
+    load.dismiss()
+    this.router.navigate(['/auth'])
   }
 
   async createNewAction() {

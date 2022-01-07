@@ -8,6 +8,7 @@ import { filter } from 'rxjs/operators';
 import { ChainService } from 'src/app/services/chain.service';
 import { DrugsList } from '../interfaces/drugs-list';
 import { InventoryList } from '../interfaces/inventory-list';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-inventory',
@@ -80,6 +81,30 @@ export class InventoryComponent implements OnInit {
   applyExpFilter(event: Event) {
     var filterValue = (event.target as HTMLInputElement).value;
     this.expSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  delete(drug_id) {
+    Swal.fire({
+      title: 'Are you sure?',
+      html: 'Click yes to delete the drug from inventory',
+      icon: 'warning',
+      iconColor: '#f00',
+      showConfirmButton: true,
+      showLoaderOnConfirm: true,
+      showCancelButton: true
+    }).then((res)=>{
+      if(res.isConfirmed == true) {
+        this.service.getData('deleteDrug', drug_id).subscribe((res: any) => {
+          if(res.code === '200') {
+            this.service.showAlert('Success', 'Drug Deleted Successfully', 'success','#0f0')
+            this.inventory()
+          }
+          else {
+            this.service.showAlert('Error', 'Something went wrong.', 'warning','#f00')
+          }
+        })
+      }
+    })
   }
   
   inventory() {
